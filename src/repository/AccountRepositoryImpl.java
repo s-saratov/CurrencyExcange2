@@ -52,7 +52,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         // Получаем список счетов для данного userID или создаём новый, если списка нет
         accounts.computeIfAbsent(userID, k -> new ArrayList<>()).add(newAccount);
         return newAccount;
-        // TODO: дописать проверки
+        // TODO: написать проверки
 
     }
 
@@ -66,22 +66,26 @@ public class AccountRepositoryImpl implements AccountRepository {
     // Возвращает счёт по ID
     @Override
     public Account getByID(int id) {
+        for (List<Account> accounts : accounts.values()) {
+            for (Account account : accounts) {
+                if (account.getAccountID() == id) return account;
+            }
+        }
         return null;
-        // TODO: дописать
+        // TODO: написать проверки
     }
 
     // Возвращает список счетов по владельцу
     @Override
     public List<Account> getAccountsByOwner(int ownerID) {
-        return List.of();
-        // TODO: дописать
+        return accounts.get(ownerID);
     }
 
     // Возвращает список счетов по валюте
     @Override
     public List<Account> getAccountsByCurrency(Currency currency) {
         return List.of();
-        // TODO: дописать
+        // TODO: написать метод
     }
 
     // Возвращает строковое представление экземпляра класса
@@ -98,8 +102,12 @@ public class AccountRepositoryImpl implements AccountRepository {
     // Удаляет счёт
     @Override
     public void deleteAccount(int id) {
-        // TODO: дописать
-
+        for (List<Account> accounts : accounts.values()) {
+            for (Account account : accounts) {
+                if (account.getAccountID() == id) accounts.remove(account);
+            }
+        }
+        // TODO: добавить проверки
     }
 
 }

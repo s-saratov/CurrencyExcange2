@@ -36,6 +36,10 @@ public interface UserRepository {
     // Возвращает объект пользователя по ID
     User getUserByID(int userId);
 
+    // === UPDATE ===
+
+
+
     // === DELETE ===
 
     // Удаляет счёт пользователя из карты

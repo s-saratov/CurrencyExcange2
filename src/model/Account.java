@@ -66,6 +66,9 @@ public class Account {
         return status;
     }
 
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 
     // Методы
 

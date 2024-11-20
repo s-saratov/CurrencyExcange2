@@ -2,6 +2,7 @@ package view;
 
 import service.MainService;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Menu {
@@ -103,7 +104,26 @@ public class Menu {
     private void showExchangeTransactionMenu() {
         System.out.println("\nВведите ID счёта списания:\n");
         service.printUserAccounts();
+
+        int sourceAccountID = getSelection();
+
+        // TODO: написать проверку корректности ID
+
+        System.out.println("\nВведите ID счёта-получателя:\n");
+
+        service.printUserAccounts(sourceAccountID);
+
+        int targetAccountID = getSelection();
+
+        // TODO: написать проверку корректности ID
+
+        BigDecimal amount = getAmount();
+
+        service.transferMoney(sourceAccountID, targetAccountID, amount);
+        service.printUserAccounts();
         waitRead();
+
+
         showExchangeMenu();
     }
 
@@ -135,6 +155,21 @@ public class Menu {
                 selection = scanner.nextInt();
                 scanner.nextLine();
                 return selection;
+            }
+        }
+    }
+
+    private BigDecimal getAmount() {
+        BigDecimal amount;
+        while (true) {
+            System.out.print("Введите сумму: ");
+            if (!scanner.hasNextBigDecimal()) {
+                System.out.println("Вы ввели не число. Повторите ввод.");
+                scanner.nextLine();
+            } else {
+                amount = scanner.nextBigDecimal();
+                scanner.nextLine();
+                return amount;
             }
         }
     }
